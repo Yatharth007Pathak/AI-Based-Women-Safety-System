@@ -1,0 +1,224 @@
+/* GLOBAL STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #1f4037, #99f2c8);
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Headings */
+h1, h2 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* BUTTONS */
+button {
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ripple Effect */
+button::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    top: 0;
+    left: -100%;
+    transition: 0.4s;
+}
+
+button:hover::after {
+    left: 100%;
+}
+
+/* LOGIN & REGISTER */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 60px auto;
+    text-align: center;
+    color: white;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+/* Glass Effect */
+.form-box {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 15px;
+    width: 48%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.form-box:hover {
+    transform: translateY(-8px);
+}
+
+.form-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-box input:focus {
+    box-shadow: 0 0 8px #00e0ff;
+}
+
+.form-box button {
+    width: 100%;
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    color: white;
+    font-weight: bold;
+}
+
+.form-box button:hover {
+    transform: scale(1.05);
+}
+
+/* DASHBOARD */
+.dashboard-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: rgba(255,255,255,0.2);
+    padding: 15px 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+}
+
+header button {
+    background: #ff4b5c;
+    color: white;
+    font-weight: bold;
+}
+
+header button:hover {
+    background: #c82333;
+}
+
+/* CARDS */
+.card {
+    background: rgba(255,255,255,0.9);
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+/* SOS BUTTON */
+.sos-btn {
+    background: linear-gradient(45deg, red, darkred);
+    color: white;
+    font-size: 20px;
+    padding: 18px 30px;
+    border-radius: 50px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(255,0,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+}
+
+.sos-btn:hover {
+    transform: scale(1.1);
+}
+
+/* VIDEO & MAP */
+#video {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* ALERT HISTORY */
+#alertHistory {
+    list-style: none;
+    padding: 0;
+}
+
+#alertHistory li {
+    background: #f1f3f6;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+#alertHistory li:hover {
+    background: #e2e6ea;
+    transform: translateX(5px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+    }
+
+    .form-box {
+        width: 100%;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .sos-btn {
+        width: 100%;
+    }
+}

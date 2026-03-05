@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Women Safety System</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="spinner"></div>
+    <p>Loading System...</p>
+</div>
+
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+    <header class="main-header">
+        <h1>AI-Based Women Safety Analytics System</h1>
+        <p>Smart Protection using AI, GPS & Real-Time Monitoring</p>
+    </header>
+
+
+    <div class="form-container">
+
+        <!-- LOGIN FORM -->
+        <div class="form-box">
+
+            <h2>Login</h2>
+
+            <input type="email" id="loginEmail" placeholder="Email Address" required>
+
+            <input type="password" id="loginPassword" placeholder="Password" required>
+
+            <button onclick="login()" class="primary-btn">
+                Login
+            </button>
+
+            <p class="form-info">
+                Access your safety dashboard
+            </p>
+
+        </div>
+
+
+        <!-- REGISTER FORM -->
+        <div class="form-box">
+
+            <h2>Create Account</h2>
+
+            <input type="text" id="regName" placeholder="Full Name" required>
+
+            <input type="email" id="regEmail" placeholder="Email Address" required>
+
+            <input type="password" id="regPassword" placeholder="Password" required>
+
+            <input type="text" id="regPhone" placeholder="Phone Number">
+
+            <button onclick="register()" class="primary-btn">
+                Register
+            </button>
+
+            <p class="form-info">
+                Join the safety monitoring system
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES PREVIEW -->
+    <section class="features">
+
+        <div class="feature-card">
+            <h3>Emotion Detection</h3>
+            <p>AI detects fear or distress from facial expressions.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Sound Monitoring</h3>
+            <p>Distress sound detection using ML models.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Crime Heatmap</h3>
+            <p>Visualizes high-risk areas using geospatial data.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Emergency SOS</h3>
+            <p>Instant alert system with location tracking.</p>
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- NOTIFICATION POPUP -->
+<div id="notification" class="notification"></div>
+
+
+<!-- SCRIPTS -->
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+
+
+<script>
+
+/* LOADER */
+
+window.addEventListener("load", () => {
+
+    const loader = document.getElementById("loader");
+
+    loader.style.opacity = "0";
+
+    setTimeout(() => {
+        loader.style.display = "none";
+    }, 500);
+
+});
+
+
+/* AUTO REDIRECT */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (localStorage.getItem("token")) {
+        window.location.href = "dashboard.html";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

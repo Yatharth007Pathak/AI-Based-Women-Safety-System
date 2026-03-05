@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Women Safety Dashboard</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Initializing Safety System...</p>
+    </div>
+
+    <div class="dashboard-container">
+
+        <!-- HEADER -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>AI Women Safety Dashboard</h1>
+                <p id="liveClock"></p>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle">🌙 Dark Mode</button>
+                <button class="logout-btn" onclick="logout()">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- SYSTEM STATUS -->
+        <section class="system-status">
+            <div class="status-card">
+                <h3>Camera</h3>
+                <p id="cameraStatus">Active</p>
+            </div>
+            <div class="status-card">
+                <h3>Audio Monitor</h3>
+                <p id="audioStatus">Idle</p>
+            </div>
+            <div class="status-card">
+                <h3>Geo Fence</h3>
+                <p id="geoStatus">Checking...</p>
+            </div>
+            <div class="status-card">
+                <h3>Safety Level</h3>
+                <p id="safetyLevel" class="safe">SAFE</p>
+            </div>
+        </section>
+
+        <!-- MAIN GRID -->
+        <div class="dashboard-grid">
+
+            <!-- SOS PANEL -->
+            <section class="card sos-card">
+                <h2>Emergency SOS</h2>
+                <p>Status:
+                    <span id="sosStatus" class="status safe">Safe</span>
+                </p>
+                <button class="sos-btn" onclick="triggerSOS()">
+                    🚨 Trigger SOS
+                </button>
+                <p class="card-info">
+                    Sends location + emergency alerts to contacts.
+                </p>
+            </section>
+
+            <!-- EMOTION AI -->
+            <section class="card">
+                <h2>Emotion Detection (AI)</h2>
+                <video id="video" autoplay muted></video>
+                <canvas id="canvas" style="display:none;"></canvas>
+                <p id="emotionResult">Waiting for camera...</p>
+            </section>
+
+            <!-- SOUND AI -->
+            <section class="card">
+                <h2>Distress Sound Detection</h2>
+                <button class="primary-btn" onclick="startAudioMonitoring()">
+                    Start Audio Monitoring
+                </button>
+                <p id="soundResult">
+                    Audio monitoring inactive
+                </p>
+            </section>
+
+            <!-- MAP + HEATMAP -->
+            <section class="card map-card">
+                <h2>Location & Crime Heatmap</h2>
+                <div id="map"></div>
+                <p class="map-info">
+                    Real-time location monitoring + crime risk analysis
+                </p>
+            </section>
+
+            <!-- ALERT HISTORY -->
+            <section class="card history-card">
+                <h2>Alert History</h2>
+                <ul id="alertHistory"></ul>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div id="notification" class="notification"></div>
+
+    <!-- GOOGLE MAPS -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=visualization"></script>
+
+    <!-- MODULAR JS  -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/emotion.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/geofence.js"></script>
+    <script src="js/map.js"></script>
+
+</body>
+</html>
