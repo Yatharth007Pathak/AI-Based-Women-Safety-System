@@ -1,0 +1,95 @@
+AI-Based-Women-Safety-Analytics-System/ 
+│
+├── README.md
+├── requirements.txt
+├── women_safety_db.sql
+│
+├── backend/
+│   ├── app.py
+│   ├── config.py
+│   ├── .env
+│   ├── app.log
+│   │
+│   ├── database/
+│   │     └── db.py
+│   │
+│   ├── routes/
+│   │     ├── auth_routes.py
+│   │     ├── alert_routes.py
+│   │     ├── emotion_routes.py
+│   │     ├── sound_routes.py
+│   │     └── geofence_routes.py
+│   │
+│   └── services/
+│         ├── alert_service.py
+│         ├── emotion_service.py
+│         ├── sound_service.py
+│         └── geofence_service.py
+│
+├── frontend/
+│   ├── index.html
+│   ├── dashboard.html
+│   │
+│   ├── css/
+│   │     └── styles.css
+│   │
+│   └── js/
+│         ├── auth.js
+│         ├── config.js
+│         ├── dashboard.js
+│         ├── emotion.js
+│         ├── geofence.js
+│         ├──map.js
+│         └── sound.js
+│
+├── ai_models/
+│   ├── emotion/
+│   │     ├── train_emotion_model.py
+│   │     └── emotion_model.h5
+│   │
+│   ├── sound/
+│   │     ├── train_sound_model.py
+│   │     └── sound_model.pkl
+│   │
+│   └── crime/
+│         ├── train_crime_model.py
+│         └── crime_model.pkl
+│
+├──dataset/
+│   ├── fer2013/
+│   │     ├──train/
+│   │     │    ├── angry
+│   │     │    ├── disgust
+│   │     │    ├── fear
+│   │     │    ├── happy
+│   │     │    ├── neutral
+│   │     │    ├── sad
+│   │     │    └── surprise
+│   │     │
+│   │     └── test/
+│   │           ├── angry
+│   │           ├── disgust
+│   │           ├── fear
+│   │           ├── happy
+│   │           ├── neutral
+│   │           ├── sad
+│   │           └── surprise
+│   │ 
+│   ├── crime_data.csv
+│   │
+│   └── audio_dataset/
+│          │
+│          ├── distress/
+│          │     scream1.wav
+│          │     scream2.wav
+│          │     ...
+│          │
+│          └── normal/
+│                normal1.wav
+│                normal2.wav
+│                ...
+│
+└── docs/
+    ├── architecture_diagram.png
+    ├── flowchart.png
+    └── screenshots/
