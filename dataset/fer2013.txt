@@ -1,0 +1,6 @@
+## Dataset
+
+The FER2013 dataset is too large to upload to GitHub.
+
+Download it from:
+https://www.kaggle.com/datasets/msambare/fer2013
