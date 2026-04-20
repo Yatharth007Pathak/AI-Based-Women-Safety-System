@@ -10,8 +10,10 @@ from sklearn.metrics import classification_report, accuracy_score
 
 
 # DATASET PATH
-DATASET_PATH = "../../dataset/audio_dataset"
+import os
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATASET_PATH = os.path.join(BASE_DIR, "dataset", "audio_dataset")
 
 # ===============================
 # FEATURE EXTRACTION
