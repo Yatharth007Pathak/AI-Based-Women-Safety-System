@@ -234,5 +234,3 @@ Output: Distress / Normal
 Model: Random Forest  
 Output: Risk Score  
 ```
-
----
