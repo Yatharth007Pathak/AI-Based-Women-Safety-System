@@ -19,7 +19,6 @@ function startCamera(videoElement) {
         .then(stream => {
             videoElement.srcObject = stream;
 
-            // Start emotion detection loop
             emotionInterval = setInterval(() => {
                 captureAndSendFrame(videoElement);
             }, 4000);
@@ -45,36 +44,25 @@ function captureAndSendFrame(videoElement) {
     const ctx = canvas.getContext("2d");
     ctx.drawImage(videoElement, 0, 0);
 
-    canvas.toBlob(blob => {
+    // 🔥 CHANGE: send base64 instead of blob
+    const imageData = canvas.toDataURL("image/jpeg");
 
-        const formData = new FormData();
-        formData.append("image", blob);
-
-        // Attach location for possible auto alert logging
-        navigator.geolocation.getCurrentPosition(position => {
-
-            formData.append("latitude", position.coords.latitude);
-            formData.append("longitude", position.coords.longitude);
-
-            sendEmotionData(formData);
-
-        }, () => {
-            sendEmotionData(formData);
-        });
-
-    }, "image/jpeg");
+    sendEmotionData(imageData);
 }
 
 
 // SEND TO BACKEND 
-function sendEmotionData(formData) {
+function sendEmotionData(imageData) {
 
-    fetch(`${API_BASE}/emotion/detect`, {
+    fetch(`${API_BASE}/emotion/predict`, {
         method: "POST",
         headers: {
+            "Content-Type": "application/json",
             "Authorization": "Bearer " + getToken()
         },
-        body: formData
+        body: JSON.stringify({
+            image: imageData
+        })
     })
     .then(res => res.json())
     .then(data => {
@@ -87,32 +75,11 @@ function sendEmotionData(formData) {
 
         if (data.auto_alert) {
             showNotification("⚠ Continuous Fear Detected! Auto Alert Triggered", "danger");
-
-            // Also trigger backend alert system
-            triggerAutoAlert("EMOTION_AUTO");
+            addAlert("😨 Fear detected");
         }
 
     })
     .catch(() => {
         console.error("Emotion detection error");
-    });
-}
-
-
-// AUTO ALERT TRIGGER 
-function triggerAutoAlert(triggerType) {
-
-    navigator.geolocation.getCurrentPosition(position => {
-
-        fetch(`${API_BASE}/alerts/auto-alert`, {
-            method: "POST",
-            headers: getAuthHeaders(true),
-            body: JSON.stringify({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                trigger_type: triggerType
-            })
-        });
-
     });
 }
