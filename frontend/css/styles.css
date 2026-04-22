@@ -46,6 +46,16 @@ button:hover::after {
     left: 100%;
 }
 
+#audioBtn {
+    background: linear-gradient(45deg, #28a745, #5cd65c);
+    color: white;
+    font-weight: bold;
+}
+
+#audioBtn.active {
+    background: linear-gradient(45deg, #ff0000, #ff4d4d);
+}
+
 /* LOGIN & REGISTER */
 .container {
     width: 90%;
@@ -221,4 +231,45 @@ header button:hover {
     .sos-btn {
         width: 100%;
     }
+}
+
+/* 🌙 DARK MODE */
+body.dark {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    transition: all 0.4s ease;
+    color: #eee;
+}
+
+/* Cards dark */
+body.dark .card {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}
+
+/* Header */
+body.dark header {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Status cards */
+body.dark .status-card {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+/* Buttons */
+body.dark button {
+    background: #333;
+    color: #fff;
+}
+
+/* Map */
+body.dark #map {
+    filter: grayscale(40%) brightness(80%);
+}
+
+/* Alert history */
+body.dark #alertHistory li {
+    background: #222;
+    color: #ddd;
 }
