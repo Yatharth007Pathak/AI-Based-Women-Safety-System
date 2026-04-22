@@ -14,7 +14,7 @@ function register() {
         return;
     }
 
-    fetch(`${API_BASE}/auth/register`, {
+    fetch(`${API_BASE}/auth/register`, { 
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -51,7 +51,7 @@ function login() {
         return;
     }
 
-    fetch(`${API_BASE}/auth/login`, {
+    fetch(`${API_BASE}/auth/login`, {   
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -66,12 +66,10 @@ function login() {
 
         if (data.token) {
 
-            // Store JWT token
             localStorage.setItem("token", data.token);
 
             showNotification("Login Successful!", "success");
 
-            // Redirect after slight delay
             setTimeout(() => {
                 window.location.href = "dashboard.html";
             }, 1000);
@@ -87,10 +85,9 @@ function login() {
 }
 
 
-// AUTO-REDIRECT IF LOGGED IN 
+// AUTO-REDIRECT
 document.addEventListener("DOMContentLoaded", () => {
 
-    // If already logged in and on index page → go to dashboard
     if (window.location.pathname.includes("index.html") && getToken()) {
         window.location.href = "dashboard.html";
     }
