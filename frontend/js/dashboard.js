@@ -2,7 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Protect Route
     requireAuth();
 
     initLoader();
@@ -16,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function initLoader() {
     const loader = document.getElementById("loader");
 
+    if (!loader) return;
+
     window.addEventListener("load", () => {
         loader.style.opacity = "0";
         setTimeout(() => loader.style.display = "none", 500);
@@ -26,6 +27,8 @@ function initLoader() {
 // CLOCK 
 function initClock() {
     const clock = document.getElementById("liveClock");
+
+    if (!clock) return;
 
     function updateClock() {
         clock.textContent = new Date().toLocaleString();
@@ -42,7 +45,6 @@ function initTheme() {
 
     if (!toggleBtn) return;
 
-    // Apply saved theme
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark");
         toggleBtn.textContent = "☀ Light Mode";
@@ -62,70 +64,55 @@ function initTheme() {
 }
 
 
-// ALERT HISTORY 
+// ALERT HISTORY (LOCAL ONLY)
 function loadAlertHistory() {
 
-    fetch(`${API_BASE}/alerts/history`, {
-        headers: getAuthHeaders(false)
-    })
-    .then(res => res.json())
-    .then(data => {
+    const list = document.getElementById("alertHistory");
+    if (!list) return;
 
-        const list = document.getElementById("alertHistory");
-        if (!list) return;
-
-        list.innerHTML = "";
-
-        if (!data.alerts || data.alerts.length === 0) {
-            list.innerHTML = "<li>No alerts yet</li>";
-            return;
-        }
-
-        data.alerts.forEach(alert => {
-            const li = document.createElement("li");
-            li.textContent = `${alert.alert_type} | ${alert.created_at}`;
-            list.appendChild(li);
-        });
-
-    })
-    .catch(() => {
-        showNotification("Failed to load alert history", "danger");
-    });
+    list.innerHTML = "<li>No alerts yet</li>";
 }
 
 
-// SOS TRIGGER 
+// ADD ALERT (REAL-TIME)
+function addAlert(message) {
+
+    const list = document.getElementById("alertHistory");
+    if (!list) return;
+
+    // remove placeholder
+    if (list.innerHTML.includes("No alerts yet")) {
+        list.innerHTML = "";
+    }
+
+    const li = document.createElement("li");
+
+    li.textContent = `${new Date().toLocaleTimeString()} | ${message}`;
+
+    // latest on top
+    list.prepend(li);
+
+    // limit to 10 alerts
+    if (list.children.length > 10) {
+        list.removeChild(list.lastChild);
+    }
+}
+
+
+// SOS TRIGGER (SAFE DEMO)
 function triggerSOS() {
 
-    navigator.geolocation.getCurrentPosition(position => {
+    console.log("SOS triggered");
 
-        fetch(`${API_BASE}/alerts/sos`, {
-            method: "POST",
-            headers: getAuthHeaders(true),
-            body: JSON.stringify({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
+    showNotification("🚨 SOS Triggered!", "danger");
 
-            const status = document.getElementById("sosStatus");
+    addAlert("🚨 Manual SOS triggered!");
 
-            status.textContent = "Alert Sent";
-            status.classList.remove("safe");
-            status.classList.add("danger");
+    const status = document.getElementById("sosStatus");
 
-            showNotification("🚨 SOS Alert Sent!", "danger");
-
-            loadAlertHistory();
-
-        })
-        .catch(() => {
-            showNotification("SOS Failed", "danger");
-        });
-
-    }, () => {
-        showNotification("Location access denied", "danger");
-    });
+    if (status) {
+        status.textContent = "Alert Sent";
+        status.classList.remove("safe");
+        status.classList.add("danger");
+    }
 }
