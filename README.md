@@ -64,6 +64,44 @@ This project demonstrates the practical application of Artificial Intelligence, 
 
 ---
 
+## ✨ Features
+
+- 🎥 Real-time Emotion Detection (Happy, Sad, Fear, etc.)
+- 🎤 Continuous Distress Sound Monitoring
+- 🚨 Manual SOS Trigger
+- 🤖 Automatic SOS (AI-based triggers)
+- 📜 Alert History Tracking
+- 🗺 Location Visualization (Leaflet + OpenStreetMap)
+- 🌙 Dark Mode UI
+- 🔐 Secure Authentication (JWT)
+
+---
+
+## 🧠 How It Works
+
+### 1. Emotion Detection
+- Captures webcam frames
+- Detects face using OpenCV
+- Predicts emotion using a deep learning model
+- Triggers alert on continuous "Fear"
+
+### 2. Sound Detection
+- Records audio in intervals
+- Extracts features using Librosa
+- Uses:
+  - Volume-based detection (fast)
+  - ML model (fallback)
+- Detects distress sounds like shouting or screaming
+
+### 3. SOS System
+
+- **Manual SOS:** Triggered by user
+- **Auto SOS:** Triggered by:
+  - Continuous fear detection
+  - Repeated distress sound detection
+
+---
+
 ## 🏗 System Architecture
 
 Frontend (HTML, CSS, JS)  
@@ -91,6 +129,7 @@ Twilio & Email Services
 - TensorFlow / Keras
 - OpenCV
 - Librosa
+- Numpy
 - Scikit-learn
 - Random Forest
 - MLP Classifier
@@ -99,15 +138,17 @@ Twilio & Email Services
 - HTML5
 - CSS3
 - JavaScript
-- Google Maps API
 
 ### Alerts & Services
 - Twilio SMS API
 - Gmail SMTP
 - Geolocation API
 
----
-
+### Other Tools
+- JWT Authentication
+- FFmpeg (audio processing)
+- Leaflet.js (map)
+- OpenStreetMap (free maps)
 
 ---
 
@@ -123,7 +164,6 @@ Tables included:
 Database file: `women_safety_db.sql`
 
 ---
-
 
 ## ⚙ Installation Guide
 
@@ -173,6 +213,7 @@ Open:
 frontend/index.html
 ```
 
+---
 
 ## 🤖 AI Models
 
@@ -193,3 +234,5 @@ Output: Distress / Normal
 Model: Random Forest  
 Output: Risk Score  
 ```
+
+---
