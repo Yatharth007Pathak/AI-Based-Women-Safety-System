@@ -1,28 +1,28 @@
 import mysql.connector
-from mysql.connector import Error
 from config import Config
 import logging
 
 
 def get_db_connection():
     """
-    Creates and returns a MySQL database connection.
+    Creates and returns a MySQL database connection
     """
-
     try:
         connection = mysql.connector.connect(
-            host=Config.MYSQL_HOST,
-            user=Config.MYSQL_USER,
-            password=Config.MYSQL_PASSWORD,
-            database=Config.MYSQL_DATABASE
+            host="localhost",
+            user="root",
+            password="gp944cawm66",
+            database="women_safety_db"
         )
 
         if connection.is_connected():
             return connection
+        else:
+            return None
 
-    except Error as e:
-        logging.error(f"Database Connection Error: {str(e)}")
-        raise e
+    except Exception as e:
+        print("Database connection error:", e)
+        return None
 
 
 def get_db_cursor(dictionary=False):
@@ -32,6 +32,11 @@ def get_db_cursor(dictionary=False):
     """
 
     connection = get_db_connection()
+
+    # safety check
+    if connection is None:
+        print("Connection failed")
+        return None, None
 
     if dictionary:
         return connection, connection.cursor(dictionary=True)
