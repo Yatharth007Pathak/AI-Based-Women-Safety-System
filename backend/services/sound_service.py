@@ -6,84 +6,117 @@ import os
 import logging
 from config import Config
 
+# LOAD MODEL
+model = None
 
-# Load Sound Model
 try:
     if os.path.exists(Config.SOUND_MODEL_PATH):
         model = joblib.load(Config.SOUND_MODEL_PATH)
-        logging.info("Sound model loaded successfully.")
+        print("✅ Sound model loaded successfully")
     else:
-        model = None
-        logging.warning("Sound model file not found.")
+        print("❌ Sound model file NOT found")
 except Exception as e:
-    model = None
-    logging.error(f"Error loading sound model: {str(e)}")
+    print("❌ Error loading sound model:", e)
 
 
-# Thread-safe session tracking per user
+# SESSION TRACKING
 sound_sessions = {}
-
-# Number of consecutive detections required
 DISTRESS_THRESHOLD = 2
 
 
-# Feature Extraction
+# FEATURE EXTRACTION
 def extract_features(file_path):
     try:
-        y, sr = librosa.load(file_path, duration=3)
+        print("🎧 Extracting audio features...")
 
-        # MFCC features
+        y, sr = librosa.load(file_path, sr=22050, mono=True)
+
+        if y is None or len(y) == 0:
+            print("❌ Empty audio file")
+            return None, None
+
+        # 🔥 VOLUME CALCULATION (IMPORTANT)
+        volume = np.mean(np.abs(y))
+        print("🔊 Volume:", volume)
+
+        # Normalize
+        if np.max(np.abs(y)) != 0:
+            y = y / np.max(np.abs(y))
+
+        # MFCC
         mfcc = np.mean(
             librosa.feature.mfcc(y=y, sr=sr, n_mfcc=40).T,
             axis=0
         )
 
-        return mfcc
+        return mfcc, volume
 
     except Exception as e:
+        print("❌ Feature Extraction Error:", e)
         logging.error(f"Feature Extraction Error: {str(e)}")
-        return None
+        return None, None
 
 
-# Sound Detection Function
+# MAIN FUNCTION
 def detect_sound(audio_file, user_id):
     try:
-        if not model:
-            return "Model Not Loaded"
+        print("\n🎤 Sound API called")
+        print("User ID:", user_id)
 
         if user_id not in sound_sessions:
             sound_sessions[user_id] = 0
 
-        # Save uploaded audio to temporary file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            audio_file.save(tmp.name)
+        # SAVE TEMP FILE
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmp:
             temp_path = tmp.name
 
-        # Extract features
-        features = extract_features(temp_path)
+        audio_file.stream.seek(0)
+        with open(temp_path, "wb") as f:
+            f.write(audio_file.read())
 
-        # Remove temporary file
-        os.remove(temp_path)
+        print("📁 Temp audio saved:", temp_path)
 
+        # EXTRACT FEATURES
+        features, volume = extract_features(temp_path)
+
+        # DELETE FILE
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+
+        # ❌ if totally failed
         if features is None:
-            return "Feature Extraction Failed"
+            return "Normal"
 
-        prediction = model.predict(features.reshape(1, -1))
-
-        # Assuming model output: 1 = Distress, 0 = Normal
-        if prediction[0] == 1:
+        # 🔥 STEP 1: VOLUME BASED DETECTION (FAST + RELIABLE)
+        if volume is not None and volume > 0.02:
+            print("🚨 Loud sound detected")
             sound_sessions[user_id] += 1
+            label = "Distress"
         else:
-            sound_sessions[user_id] = 0
+            # 🔥 STEP 2: ML MODEL (SECONDARY)
+            if model is not None:
+                prediction = model.predict(features.reshape(1, -1))
+                result = int(prediction[0])
+                print("🔊 ML Prediction:", result)
 
-        # Auto-SOS Logic
+                if result == 1:
+                    sound_sessions[user_id] += 1
+                    label = "Distress"
+                else:
+                    sound_sessions[user_id] = 0
+                    label = "Normal"
+            else:
+                label = "Normal"
+
+        # AUTO SOS
         if sound_sessions[user_id] >= DISTRESS_THRESHOLD:
             sound_sessions[user_id] = 0
-            logging.info(f"Auto-SOS triggered via Sound for user {user_id}")
+            print("🚨 AUTO SOS TRIGGERED")
             return "AUTO_SOS_TRIGGERED"
 
-        return "Distress Detected" if prediction[0] == 1 else "Normal"
+        return label
 
     except Exception as e:
+        print("❌ Sound Detection Error:", e)
         logging.error(f"Sound Detection Error: {str(e)}")
         return "Detection Error"
