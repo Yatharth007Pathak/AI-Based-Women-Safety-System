@@ -7,6 +7,8 @@
     <title>Women Safety Dashboard</title>
 
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -80,7 +82,7 @@
             <!-- SOUND AI -->
             <section class="card">
                 <h2>Distress Sound Detection</h2>
-                <button class="primary-btn" onclick="startAudioMonitoring()">
+                <button id="audioBtn" class="primary-btn" onclick="startAudioMonitoring()">
                     Start Audio Monitoring
                 </button>
                 <p id="soundResult">
@@ -88,7 +90,7 @@
                 </p>
             </section>
 
-            <!-- MAP + HEATMAP -->
+            <!-- MAP (SAFE DEMO VERSION) -->
             <section class="card map-card">
                 <h2>Location & Crime Heatmap</h2>
                 <div id="map"></div>
@@ -110,8 +112,6 @@
     <!-- NOTIFICATIONS -->
     <div id="notification" class="notification"></div>
 
-    <!-- GOOGLE MAPS -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=visualization"></script>
 
     <!-- MODULAR JS  -->
     <script src="js/config.js"></script>
