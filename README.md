@@ -152,6 +152,106 @@ Twilio & Email Services
 
 ---
 
+## 📂 Project Structure
+
+AI-Based-Women-Safety-Analytics-System/ 
+│
+├── README.md
+├── requirements.txt
+├── women_safety_db.sql
+│
+├── backend/
+│   ├── app.py
+│   ├── config.py
+│   ├── .env
+│   ├── app.log
+│   │
+│   ├── database/
+│   │     └── db.py
+│   │
+│   ├── routes/
+│   │     ├── auth_routes.py
+│   │     ├── alert_routes.py
+│   │     ├── emotion_routes.py
+│   │     ├── sound_routes.py
+│   │     └── geofence_routes.py
+│   │
+│   └── services/
+│         ├── alert_service.py
+│         ├── emotion_service.py
+│         ├── sound_service.py
+│         └── geofence_service.py
+│
+├── frontend/
+│   ├── index.html
+│   ├── dashboard.html
+│   │
+│   ├── css/
+│   │     └── styles.css
+│   │
+│   └── js/
+│         ├── auth.js
+│         ├── config.js
+│         ├── dashboard.js
+│         ├── emotion.js
+│         ├── geofence.js
+│         ├──map.js
+│         └── sound.js
+│
+├── ai_models/
+│   ├── emotion/
+│   │     ├── train_emotion_model.py
+│   │     └── emotion_model.h5
+│   │
+│   ├── sound/
+│   │     ├── train_sound_model.py
+│   │     └── sound_model.pkl
+│   │
+│   └── crime/
+│         ├── train_crime_model.py
+│         └── crime_model.pkl
+│
+├──dataset/
+│   ├── fer2013/
+│   │     ├──train/
+│   │     │    ├── angry
+│   │     │    ├── disgust
+│   │     │    ├── fear
+│   │     │    ├── happy
+│   │     │    ├── neutral
+│   │     │    ├── sad
+│   │     │    └── surprise
+│   │     │
+│   │     └── test/
+│   │           ├── angry
+│   │           ├── disgust
+│   │           ├── fear
+│   │           ├── happy
+│   │           ├── neutral
+│   │           ├── sad
+│   │           └── surprise
+│   │ 
+│   ├── crime_data.csv
+│   │
+│   └── audio_dataset/
+│          │
+│          ├── distress/
+│          │     scream1.wav
+│          │     scream2.wav
+│          │     ...
+│          │
+│          └── normal/
+│                normal1.wav
+│                normal2.wav
+│                ...
+│
+└── docs/
+    ├── architecture_diagram.png
+    ├── flowchart.png
+    └── screenshots/
+
+---
+
 ## Database Schema
 
 Tables included:
@@ -184,7 +284,19 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Configure Environment Variables
+### 4️⃣ Train AI models
+```bash
+cd ../ai_models/emotion
+python train_emotion_model.py
+
+cd ../ai_models/sound
+python train_sound_model.py
+
+cd ../ai_models/crime
+python train_crime_model.py
+```
+
+### 5️⃣ Configure Environment Variables
 Create .env file inside backend folder:
 ```
 TWILIO_ACCOUNT_SID=your_sid
@@ -195,19 +307,19 @@ EMAIL_ADDRESS=your_email@gmail.com
 EMAIL_PASSWORD=your_gmail_app_password
 ```
 
-### 5️⃣ Setup MySQL Database
+### 6️⃣ Setup MySQL Database
 Import:
 ```
 women_safety_db.sql
 ```
 
-### 6️⃣ Run Backend
+### 7️⃣ Run Backend
 ```bash
 cd backend
 python app.py
 ```
 
-### 7️⃣ Open Frontend
+### 8️⃣ Open Frontend
 Open:
 ```
 frontend/index.html
