@@ -91,5 +91,10 @@ AI-Based-Women-Safety-Analytics-System/
 │
 └── docs/
     ├── architecture_diagram.png
+    ├── BackendSetup.png
+    ├── FrontendRun.png
     ├── flowchart.png
+    ├── InstallRequirements.png
+    ├── SQLsetup.png
+    ├── AI models setup/
     └── screenshots/
