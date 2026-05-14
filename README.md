@@ -247,12 +247,3 @@ Model: Random Forest
 Output: Risk Score  
 ```
 
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/000daa8b-ba05-4971-a4d9-d2cce195ec76" />
-
-<img width="1908" height="1077" alt="image" src="https://github.com/user-attachments/assets/187f310e-a14e-490a-870d-f6b9cf1af083" />
-
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/1f543b42-9525-4dbd-a2e2-ce799a42d95c" />
-
-<img width="1917" height="1076" alt="image" src="https://github.com/user-attachments/assets/f5bf4ee7-a3d3-4bc7-9342-f81b805daca1" />
-
-<img width="1907" height="1073" alt="image" src="https://github.com/user-attachments/assets/0ab0c176-f4b6-4e8b-bf18-7a68bfc5741a" />
